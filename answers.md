@@ -1,9 +1,72 @@
 ---
-updated: 2024-10-24T00:16
-created: 2024-10-23T21:09
+updated: 2026-06-24T00:16
+created: 2026-06-23T21:09
 ---
 # Answers
+### Step 2 : NoSQL Systems
 
+**2.1 Defining Terms**
+```text
+Briefly explain what is meant by the terms database, collection, document and field in terms of MongoDB. 
+- A Document is the smallest unit of data storage, represented in BSON (Binary JSON) format in MongoDB.
+- A collection  is a group of related documents that correspond to an entity. 
+- Database is a container for collections. A group of collections is housed in a database.
+- Fields are the fundamental building blocks of MongoDB documents, similar to columns in relational databases. 
+  They define the structure and data stored within a document. A field is represented as a key-value pair. 
+```
+**2.2 NoSQL Database Types**
+```text
+Briefly outline the key features and advantages for TWO of the following NoSQL database types:
+* Document Database
+* Key-Value Store 
+* Wide-Column Oriented Database
+* Graph Database 
+
+1. Document Database
+
+A document database stores data as flexible documents, typically in JSON or BSON format. 
+Each document can have a different structure, making the database highly adaptable to changing requirements.
+
+Advantages:
+
+* Flexible schema allows easy handling of unstructured or semi-structured data.
+* Scales horizontally across multiple servers.
+* Stores complex objects in a single document, reducing the need for joins.
+* Well suited for content management systems, e-commerce platforms, and web applications.
+
+2. Graph Database
+
+A graph database stores data as nodes (entities) and edges (relationships), making relationships a first-class component of the data model.
+
+Advantages:
+
+* Efficiently handles highly connected data.
+* Enables fast traversal of complex relationships.
+* Ideal for social networks, recommendation engines, fraud detection, and network analysis.
+* Simplifies queries involving multiple relationships compared to relational databases.
+```
+
+**2.3 NoSQL Database Systems**
+```text
+Provide one example product (commercial or open source) for each of your NoSQL Database types.
+You may **NOT** include _MongoDB_which is an example of a _Document Database_.
+
+One example product for each of the NoSQL Database types:
+* Document Database: Couchbase | [couch-base](https://docs.couchbase.com/home/index.html)
+  Couchbase combines document-oriented and key-value data models, offering flexibility and high performance
+* Graph Database: Neo4j | [neo4j](https://neo4j.com/product/neo4j-graph-database/)
+  Neo4j is a native graph database designed to store, manage, and query connected data efficiently.
+
+```
+
+**2.4 NoSQL Database Users**
+```text
+Provide and example for each of your NoSQL database of the situation when your database types may provide a benefit when used.
+
+The situations/application of the database types must be different. 
+
+
+```
 ## Software as a Service - Back-End Development
 
 #
