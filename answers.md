@@ -52,9 +52,10 @@ Provide one example product (commercial or open source) for each of your NoSQL D
 You may **NOT** include _MongoDB_which is an example of a _Document Database_.
 
 One example product for each of the NoSQL Database types:
-* Document Database: Couchbase | [couch-base](https://docs.couchbase.com/home/index.html)
+- Document Database: Couchbase | [couch-base](https://docs.couchbase.com/home/index.html)
   Couchbase combines document-oriented and key-value data models, offering flexibility and high performance
-* Graph Database: Neo4j | [neo4j](https://neo4j.com/product/neo4j-graph-database/)
+  
+- Graph Database: Neo4j | [neo4j](https://neo4j.com/product/neo4j-graph-database/)
   Neo4j is a native graph database designed to store, manage, and query connected data efficiently.
 
 ```
@@ -65,8 +66,25 @@ Provide and example for each of your NoSQL database of the situation when your d
 
 The situations/application of the database types must be different. 
 
+1. Document Database = Couchbase  
+   Situation : Due to Couchbase's high performance and low latency it is suitable for a variety of use cases such as:
+   - Real-Time Analytics: Couchbase is ideal for performing real-time analytics on a large data sets. 
+   - E-Commerce and Customer Management: Couchbase is also used for E-commerce to manage transactions efficiently and 
+     can manage high volumes of customer data.
+     
+2. Graph Database  
+   Situation:  Due Neo4j's ability to manage large-scale, interconnected data it is well-suited for a variety of use cases such as:
+   - Fraud Detection: Neo4j's graph model makes it easy to identify patterns and anomalies in these relationships, allowing 
+     fraud analysts to quickly detect and prevent fraudulent activity. Neo4j can be used to build fraud detection systems for 
+     industries like banking, insurance and e-commerce.    
+   - Healthcare management systems: Healthcare involves managing and analyzing complex relationships between patients, medical professional, 
+     medical records and treatments. Neo4j's graph-based model is well-suited to represent these relationships as a network of nodes and 
+     relationships. Neo4j can be used to build healthcare management systems that allow doctors and healthcare professionals to navigate and analyze 
+     medical data and patient records. 
 
 ```
+
+
 ## Software as a Service - Back-End Development
 
 #
