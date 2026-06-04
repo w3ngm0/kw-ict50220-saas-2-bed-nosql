@@ -83,6 +83,82 @@ The situations/application of the database types must be different.
      medical data and patient records. 
 
 ```
+### Step 3 : NoSQL Databases & Collections 
+**3.1 Naming databases, collections and fields**
+```text
+There are many naming conventions for variable names, functions, database fields, tables, collections and so on. 
+For the NoSQL database selected, which naming convention would you select for the database, collections and fields,
+and why? 
+```
+> For the NoSQL database naming conventions I would select for each convention would be: 
+> 
+| MongoDB    | Recommended Style | Example                 |
+|------------|-------------------|-------------------------|
+| Database   | snake_case        | student_portal          |
+| Collection | snake_case        | orders, user_profiles   |
+| Field      | camelCase         | createdAt, emailAddress |
+> -  Justification on why this naming convention was chosen.
+> - Databases serve as the foundation for our collections. Naming them effectively will help clearly describe the data it contains. It should
+> be descriptive and leave no confusion. Watch out for spaces at the beginning or end of database names. MongoDB use JavaScript or JSON-based formats.
+> snake_case is clearer for database and collection names. 
+> - Collections are like containers that holds related documents. Choosing right names for it should tell a detail of what kind of data
+> they hold. Lowercase collection names are preferred. Choosing a camelCase of snake_case either is appropriate. However, they must be consistent.
+> - Fields should be descriptive and simple, they should not leave any confusion. They should hold lower cases to keep things uniform
+> and simple and stay the course with whatever naming convention we choose, hold with it. Using camelCase for field name helps with this. 
+
+ 
+**3.2 Connecting**
+```text
+Connect to a running instance of MongoDB (preferred to be your MongoDB Atlas instance). 
+- What was the connection string used to connect to your instance of MongoDB? 
+Give the connection string and a complete CLI command using the MongoDB shell. 
+Example: mongos mongodb://192.168.0.5:9999/foo 
+```
+![img.png](assets/images/step-3-002.png)
+ 
+**3.2 Database Creation**
+>Create and use a database named:
+> * saas_bed_portfolio_2026S1
+> 
+> where YYYY is the Year and SN in the semester, for example S1
+> * How did you create the database using the CLI?
+> -> using : use saas_bed_portfolio_2026S1, from the CLI. 
+> * Did you encounter any issues when creating the database? 
+> -> Yes, I had MongoServerError: bad auth :authentication failed due to wrong password. 
+> * If you did, how did you resolve them? 
+> -> Inserted the correct credentials to connect to my MongoDB Atlas  
+
+![img.png](assets/images/step-3-002.2.png)
+
+
+**3.3 Schema Design for Collection**
+> An example of the possible data that may be stored in this collection.
+> 
+| Data Item       | Suggested Data Type | Example Data            |
+|-----------------|---------------------|-------------------------|
+| title           | String              | Aliens                  |
+| year            | Integer             | 2009                    |
+| writers         | Array of strings    | Sean Bean, Isaac Newton |
+| franchise       | String              | Avatar                  |
+| running time    | Integer (minutes)   | 162                     |
+| budget          | Long integer (USD)  | 237000000               |
+| actors          | Array of strings    | Kiefer Sutherland, Rex  |
+| directors       | Array of strings    | Patrick Stewart         |
+| summary         | String              | Ipsum lorem exa dux     |
+| random          | Integer (Double)    | 0.44                    |
+| imdb id         | String              | tt0499549               |
+| rotten tomatoes | Integer             | 34                      |
+| genres          | Array of Strings    | Drama                   |
+| genres          | Array of Strings    | Drama                   |
+
+> Identify any rules you should apply to validate the data is suitable. 
+> Suitable shcema validation rule for this collection that utilises the following details. 
+
+> What data type are you using for each field? 
+> Identify the validation rules you wish to apply
+> Provide the schema validation code for the collection. 
+> 
+**3.4 Collection**
 
 
 ## Software as a Service - Back-End Development
@@ -97,10 +173,10 @@ The situations/application of the database types must be different.
 
 Replace GIVEN_NAME_HERE, FAMILY_NAME_HERE and STUDENT_ID_HERE entries with your details:
 
-| Given Name      | Family Name      | Student ID      |
-|-----------------|------------------|-----------------|
-| Anna            | Seed             | x1234567890     |
-| GIVEN_NAME_HERE | FAMILY_NAME_HERE | STUDENT_ID_HERE |
+| Given Name | Family Name | Student ID  |
+|------------|-------------|-------------|
+| Anna       | Seed        | x1234567890 |
+| Kelden     | Wangmo      | 20070505    |
 
 
 
