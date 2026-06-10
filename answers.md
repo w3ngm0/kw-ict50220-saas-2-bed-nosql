@@ -134,31 +134,129 @@ Example: mongos mongodb://192.168.0.5:9999/foo
 **3.3 Schema Design for Collection**
 > An example of the possible data that may be stored in this collection.
 > 
-| Data Item       | Suggested Data Type | Example Data            |
-|-----------------|---------------------|-------------------------|
-| title           | String              | Aliens                  |
-| year            | Integer             | 2009                    |
-| writers         | Array of strings    | Sean Bean, Isaac Newton |
-| franchise       | String              | Avatar                  |
-| running time    | Integer (minutes)   | 162                     |
-| budget          | Long integer (USD)  | 237000000               |
-| actors          | Array of strings    | Kiefer Sutherland, Rex  |
-| directors       | Array of strings    | Patrick Stewart         |
-| summary         | String              | Ipsum lorem exa dux     |
-| random          | Integer (Double)    | 0.44                    |
-| imdb id         | String              | tt0499549               |
-| rotten tomatoes | Integer             | 34                      |
-| genres          | Array of Strings    | Drama                   |
-| genres          | Array of Strings    | Drama                   |
+| Data Item       | Suggested Data Type | Example Data              |
+|-----------------|---------------------|---------------------------|
+| title           | String              | Aliens                    |
+| year            | Integer             | 2009                      |
+| writers         | Array of strings    | Sean Bean, Isaac Newton   |
+| franchise       | String              | Avatar                    |
+| running time    | Integer (minutes)   | 162                       |
+| budget          | Long integer (USD)  | 237000000                 |
+| actors          | Array of strings    | Kiefer Sutherland, Rex    |
+| directors       | Array of strings    | Patrick Stewart           |
+| summary         | String              | Ipsum lorem exa dux       |
+| random          | Integer (Double)    | 0.44                      |
+| imdb id         | String              | tt0499549                 |
+| imdb rating     | Integer             | 7.9                       |
+| rotten tomatoes | Integer             | 34                        |
+| genres          | Array of Strings    | Drama, Sci-Fi             |
+| updated_at      | Date                | 2026-05-22T08:53:23.387Z  |
 
-> Identify any rules you should apply to validate the data is suitable. 
-> Suitable shcema validation rule for this collection that utilises the following details. 
+> What data type are you using for each field?
+> The movie collection will store a variety of MongoDB data types. String data types will be used for 
+> fields such as `title`, `franchise`, `summary`, and `imdb_id`. 
+> Integer data types will be used for `year`, `running_time`, and `rotten_tomatoes`. 
+> The budget field will use the Long data type to support large currency values.
+> Arrays of strings will be used for `writers`, `actors`, `directors`, and `genres` because multiple values can be stored in a single field.
+> The `random` field will use the Double data type to store decimal values.
 
-> What data type are you using for each field? 
+
 > Identify the validation rules you wish to apply
+> * title is required and must be a string.
+> * year is required and must be an integer.
+> * year should be between 1888 and 2100.
+> * running_time must be a positive integer.
+> * budget must be a long integer and cannot be negative.
+> * writers, actors, directors, and genres must be arrays of strings.
+> * imdb_id is required and must follow the IMDB format, such as tt0499549.
+> * rotten_tomatoes must be an integer between 0 and 100.
+> * random must be a double between 0 and 1.
+> * updated_at must be date values.
+> * box_office → Long / Int
+> * imdb_rating → Double or Null
+> * imdb_id → String or Null
+> * rotten_tomatoes → Int or Null 
+ 
+
 > Provide the schema validation code for the collection. 
-> 
-**3.4 Collection**
+
+```text
+db.createCollection("movies", {
+  validator: {
+    $jsonSchema: {
+    bsonType: "object",
+    required: ["title", "year", "running_time"],
+    properties: {
+      title: {
+        bsonType: "string"
+      },
+      year: {
+        bsonType: "int",
+        minimum: 1888,
+        maximum: 2100
+      },
+      writers: {
+        bsonType: "array",
+        items: {
+          bsonType: "string"
+        }
+      },
+      running_time: {
+        bsonType: "int",
+        minimum: 1
+      },
+      budget: {
+        bsonType: ["int", "long"],
+        minimum: 0
+      },
+      actors: {
+        bsonType: "array",
+        items: {
+          bsonType: "string"
+        }
+      },
+      directors: {
+        bsonType: "array",
+        items: {
+          bsonType: "string"
+        }
+      },
+      imdb_id: {
+        bsonType: ["string", "null"]
+      },
+      imdb_rating: {
+        bsonType: ["double", "null"],
+        minimum: 0,
+        maximum: 10
+      },
+      rotten_tomatoes: {
+        bsonType: ["int", "null"],
+        minimum: 0,
+        maximum: 100
+      }
+    }
+  }
+});
+``` 
+
+**3.4 Collection Creation**
+
+Using db.collections.insertOne()
+
+```text
+db.films.insertOne({
+...   title: "Star Trek: Nemesis",
+...   year: 2002,
+...   writers: ["John Logan", "Rick Berman", "Brent Spiner"],
+...   summary: "A clone of Picard, created by the Romulans, assassinates the Romulan Senate, assumes absolute power, and lures Picard and the Enterprise to Romulus under the false pretext of a peace overture.",
+...   franchise: "Star Trek",
+...   running_time: 117,
+...   budget: 60000000,
+...   box_office: 67300000
+... })
+```
+![img_1.png](assets/images/step-3-004.png)
+
 
 
 ## Software as a Service - Back-End Development
@@ -185,7 +283,7 @@ Replace GIVEN_NAME_HERE, FAMILY_NAME_HERE and STUDENT_ID_HERE entries with your 
 I, THE ABOVE NAMED student, by submitting this assessment, I am acknowledging the following:
 
 - The submission is completely my own work.
-- I have not used AI in the formuation of the answers within this assessment.
+- I have not used AI in the formation of the answers within this assessment.
 - I have acknowledged all sources of information used in this work (if required).
 - I have kept a copy of this assessment (where practicable).
 - I understand a copy of my assessment will be kept by TAFE for their records.
