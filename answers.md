@@ -180,12 +180,12 @@ Example: mongos mongodb://192.168.0.5:9999/foo
 
 > Provide the schema validation code for the collection. 
 
-```text
-db.createCollection("movies", {
+```php
+db.createCollection("films", {
   validator: {
     $jsonSchema: {
     bsonType: "object",
-    required: ["title", "year", "running_time"],
+    required: ["title"],
     properties: {
       title: {
         bsonType: "string"
@@ -233,6 +233,7 @@ db.createCollection("movies", {
         bsonType: ["int", "null"],
         minimum: 0,
         maximum: 100
+        }
       }
     }
   }
@@ -243,19 +244,22 @@ db.createCollection("movies", {
 
 Using db.collections.insertOne()
 
-```text
+```php
 db.films.insertOne({
-...   title: "Star Trek: Nemesis",
-...   year: 2002,
-...   writers: ["John Logan", "Rick Berman", "Brent Spiner"],
-...   summary: "A clone of Picard, created by the Romulans, assassinates the Romulan Senate, assumes absolute power, and lures Picard and the Enterprise to Romulus under the false pretext of a peace overture.",
-...   franchise: "Star Trek",
-...   running_time: 117,
-...   budget: 60000000,
-...   box_office: 67300000
-... })
+ title: "Star Trek: Nemesis",
+ year: 2002,
+ writers: ["John Logan", "Rick Berman", "Brent Spiner"],
+ summary: "A clone of Picard, created by the Romulans, assassinates the Romulan Senate, assumes absolute power, and lures Picard and the Enterprise to Romulus under the false pretext of a peace overture.",
+ franchise: "Star Trek",
+ running_time: 117,
+ budget: 60000000,
+ box_office: 67300000
+ })
 ```
-![img_1.png](assets/images/step-3-004.png)
+
+![img.png](assets/images/step-3-004.png)
+
+**4.1**
 
 
 
