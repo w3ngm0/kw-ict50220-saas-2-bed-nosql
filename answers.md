@@ -259,10 +259,24 @@ db.films.insertOne({
 
 ![img.png](assets/images/step-3-004.png)
 
-**4.1**
+**4.1 Inserting Data**
+
+```php
+db.films.insertOne({
+ title: "My Dearest Assassin",
+ year: 2026,
+ writers: ["Watthana Veerayawatthana"],
+ actors:["Pimchanok Luevisadpaibul", "Tor Thanapob Leeratanakachorn", "Sivakorn Adulsuttikul"],
+ running_time: 127,
+ budget: 237000000,
+ genres: ["Action", "Romance", "Thai", "Thriller", "Drama"]
+ })
+```
+
+![img.png](assets/images/step-4-001.png)
 
 
-
+**4.2 Inserting Data from File**
 ## Software as a Service - Back-End Development
 
 #
