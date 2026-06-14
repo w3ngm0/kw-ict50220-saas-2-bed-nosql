@@ -10,7 +10,6 @@ Replace GIVEN_NAME_HERE, FAMILY_NAME_HERE and STUDENT_ID_HERE entries with your 
 
 | Given Name | Family Name | Student ID  |
 |------------|-------------|-------------|
-| Anna       | Seed        | x1234567890 |
 | Kelden     | Wangmo      | 20070505    |
 
 
