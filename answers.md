@@ -753,6 +753,82 @@ values, MongoDB breaks text into searchable terms and allows users for keywords 
 >   - Searching for films related to "outdoor adventure"
 >   - Looking for keywords within titles and summaries.
 
+## Step 10: Aggregation
+
+**10.1 Counting Documents** 
+```php
+b.films.aggregate([
+{
+ $match: { franchise: "Star Trek" }
+},
+{ $count: "star_trek_films" }
+])
+```
+![img.png](assets/images/step-10-001.png)
+
+> This aggregation pipeline first filters the collection to include only documents where the `franchise` field is `"Star Trek"` using `$match`.
+> The `$count` stage then counts the number of matching documents and returns the total number of Star Trek films.
+ 
+**10.2 Mean Values** 
+```php
+db.films.aggregate([
+{
+ $group: {
+    _id: null,
+    average_budget: { $avg: "$budget" },
+    average_box_office: { $avg: "$box_office" }
+   }
+  }
+])
+```
+![img.png](assets/images/step-10-002.png)
+
+> - This aggregation pipeline groups all documents together using `_id: null`. 
+> - The `$avg` operator is then used to calculate the average value of the `budget` field and the average value of the `box_office` field.
+> - Both averages are displayed in the result.
+
+**10.3 Profit Earnings** 
+* This aggregation query, or queries, calculates the profit (box office - budget) for the films, showing just the film title and the profit.
+* Films with no budget and/ or no box office should NOT be included in the results.
+* This aggregation pipeline first filters out any films that do not have both a budget and box office value using `$match`.
+* The `$project` stage then displays only the film title and a calculated profit field. 
+* The profit is calculated by subtracting the `budget` from the `box_office` using the `$subtract` operator.
+
+```php
+db.films.aggregate([
+{ $match: {
+budget: { $ne: null },
+box_office: { $ne: null }
+        }
+    },
+{ $project: {
+    _id: 0,
+    title: 1,
+    profit: {
+    $subtract: ["$box_office", "$budget"] }
+        }
+    }
+])
+```
+![step-10-003.png](assets/images/step-10-003.png)
+
+**10.4 Grouping Data**
+
+* This aggregation pipeline groups films by the `franchise` field using the `$group` stage.
+* The `$sum` operator increments a counter for each document in the group, producing the total number of films in each franchise. 
+* The franchise name is displayed in the `_id` field and the number of films is displayed in `film_count`.
+
+```php
+db.films.aggregate([{
+$group: {
+  _id: "$franchise",
+  film_count: { $sum: 1}
+    }
+  }
+])
+```
+![img_1.png](assets/images/step-10-004.png)
+
 
 
 ## Software as a Service - Back-End Development
