@@ -545,6 +545,91 @@ db.films.updateOne(
 ```
 ![img.png](assets/images/step-6-002-3.png)
 
+## Step 7: CRUD - Searches 
+**7.1 Searching for titles with ...**
+
+```php 
+db.films.find({
+title: { $regex: "^T" }
+})
+```
+
+![img.png](assets/images/step-7-001.png)
+
+### Explanation
+
+This query uses a regular expression to find all films where the `title` field begins with the letter "T".
+The `^` symbol indicates the start of the string.
+
+**7.2 Searching for ...**
+```php
+db.films.find({
+genre: 
+})
+```
+
+![img.png](assets/images/step-7-002.png)
+
+### Explanation 
+* $regex: "th" searches for the letters "th" anywhere in the genre field
+* $options: "i" makes the search case-insensitive.
+
+**7.3 Searching for synopses with... and not ...**
+```php
+db.films.find({
+summary: {
+    $regex: "Captain",
+    $options: "i",
+    },
+$nor: [{
+    summary: {
+        $regex: "Pike",
+        $options: "i"
+        }
+    }]
+})
+```
+![img_1.png](assets/images/step-7-003.png)
+
+### Explanation
+* This query finds films whose synopsis (`summary`) contains the word "Captain" but does not contain the word "Pike". 
+* The `i` option makes the search case-insensitive.
+
+**7.4 Searching for synopses with... or ...**
+```php
+db.films.find({
+$or: [ {summary: /London/i },
+{summary: /Brooklyn/i },
+] })
+```
+![img.png](assets/images/step-7-004.png)
+
+### Explanation
+
+* This query uses the `$or` operator to find films whose synopsis (`summary`) contains either the word "London" or the word "Brooklyn". 
+* The `i` option makes the search case-insensitive.
+
+**7.5 Searching for synopses with ... and ...**
+
+```php
+db.films.find({
+$and: [
+  { summary: /team/i },
+  { summary: /search/i }
+  ]
+... })
+```
+![img.png](step-7-005.png)
+
+### Explanation
+
+- This query uses the `$and` operator to find films where the `summary` field contains both the word **"team"** and the word **"search"**. 
+- Each regular expression checks for one word, and both conditions must be true for a document to be returned.
+- The `i` option makes the search case-insensitive.
+
+
+
+
 ## Software as a Service - Back-End Development
 
 #
