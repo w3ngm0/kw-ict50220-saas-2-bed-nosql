@@ -475,20 +475,20 @@ Replace `FIELD_NAME_HERE` and `DATA_TYPE_HERE` in the table below.
 
 - Create a new collection named _films_ and insert the provided data (full statement)
 
-Using db.collections.insertOne()
+> Using db.collections.insertOne()
 
-> ```js
+```js
 db.films.insertOne({
-title: "Star Trek: Nemesis",
-year: 2002,
-writers: ["John Logan", "Rick Berman", "Brent Spiner"],
-summary: "A clone of Picard, created by the Romulans, assassinates the Romulan Senate, assumes absolute power, and lures Picard and the Enterprise to Romulus under the false pretext of a peace overture.",
-franchise: "Star Trek",
-running_time: 117,
-budget: 60000000,
-box_office: 67300000
+    title: "Star Trek: Nemesis",
+    year: 2002,
+    writers: ["John Logan", "Rick Berman", "Brent Spiner"],
+    summary: "A clone of Picard, created by the Romulans, assassinates the Romulan Senate, assumes absolute power, and lures Picard and the Enterprise to Romulus under the false pretext of a peace overture.",
+    franchise: "Star Trek",
+    running_time: 117,
+    budget: 60000000,
+    box_office: 67300000
 })
-> ```
+```
 
 Screen Shot:
 
