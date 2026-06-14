@@ -1,839 +1,4 @@
----
-updated: 2026-06-24T00:16
-created: 2026-06-23T21:09
----
-# Answers
-### Step 2 : NoSQL Systems
-
-**2.1 Defining Terms**
-```text
-Briefly explain what is meant by the terms database, collection, document and field in terms of MongoDB. 
-- A Document is the smallest unit of data storage, represented in BSON (Binary JSON) format in MongoDB.
-- A collection  is a group of related documents that correspond to an entity. 
-- Database is a container for collections. A group of collections is housed in a database.
-- Fields are the fundamental building blocks of MongoDB documents, similar to columns in relational databases. 
-  They define the structure and data stored within a document. A field is represented as a key-value pair. 
-```
-**2.2 NoSQL Database Types**
-```text
-Briefly outline the key features and advantages for TWO of the following NoSQL database types:
-* Document Database
-* Key-Value Store 
-* Wide-Column Oriented Database
-* Graph Database 
-
-1. Document Database
-
-A document database stores data as flexible documents, typically in JSON or BSON format. 
-Each document can have a different structure, making the database highly adaptable to changing requirements.
-
-Advantages:
-
-* Flexible schema allows easy handling of unstructured or semi-structured data.
-* Scales horizontally across multiple servers.
-* Stores complex objects in a single document, reducing the need for joins.
-* Well suited for content management systems, e-commerce platforms, and web applications.
-
-2. Graph Database
-
-A graph database stores data as nodes (entities) and edges (relationships), making relationships a first-class component of the data model.
-
-Advantages:
-
-* Efficiently handles highly connected data.
-* Enables fast traversal of complex relationships.
-* Ideal for social networks, recommendation engines, fraud detection, and network analysis.
-* Simplifies queries involving multiple relationships compared to relational databases.
-```
-
-**2.3 NoSQL Database Systems**
-```text
-Provide one example product (commercial or open source) for each of your NoSQL Database types.
-You may **NOT** include _MongoDB_which is an example of a _Document Database_.
-
-One example product for each of the NoSQL Database types:
-- Document Database: Couchbase | [couch-base](https://docs.couchbase.com/home/index.html)
-  Couchbase combines document-oriented and key-value data models, offering flexibility and high performance
-  
-- Graph Database: Neo4j | [neo4j](https://neo4j.com/product/neo4j-graph-database/)
-  Neo4j is a native graph database designed to store, manage, and query connected data efficiently.
-
-```
-
-**2.4 NoSQL Database Users**
-```text
-Provide and example for each of your NoSQL database of the situation when your database types may provide a benefit when used.
-
-The situations/application of the database types must be different. 
-
-1. Document Database = Couchbase  
-   Situation : Due to Couchbase's high performance and low latency it is suitable for a variety of use cases such as:
-   - Real-Time Analytics: Couchbase is ideal for performing real-time analytics on a large data sets. 
-   - E-Commerce and Customer Management: Couchbase is also used for E-commerce to manage transactions efficiently and 
-     can manage high volumes of customer data.
-     
-2. Graph Database  
-   Situation:  Due Neo4j's ability to manage large-scale, interconnected data it is well-suited for a variety of use cases such as:
-   - Fraud Detection: Neo4j's graph model makes it easy to identify patterns and anomalies in these relationships, allowing 
-     fraud analysts to quickly detect and prevent fraudulent activity. Neo4j can be used to build fraud detection systems for 
-     industries like banking, insurance and e-commerce.    
-   - Healthcare management systems: Healthcare involves managing and analyzing complex relationships between patients, medical professional, 
-     medical records and treatments. Neo4j's graph-based model is well-suited to represent these relationships as a network of nodes and 
-     relationships. Neo4j can be used to build healthcare management systems that allow doctors and healthcare professionals to navigate and analyze 
-     medical data and patient records. 
-
-```
-### Step 3 : NoSQL Databases & Collections 
-**3.1 Naming databases, collections and fields**
-```text
-There are many naming conventions for variable names, functions, database fields, tables, collections and so on. 
-For the NoSQL database selected, which naming convention would you select for the database, collections and fields,
-and why? 
-```
-> For the NoSQL database naming conventions I would select for each convention would be: 
-> 
-| MongoDB    | Recommended Style | Example                 |
-|------------|-------------------|-------------------------|
-| Database   | snake_case        | student_portal          |
-| Collection | snake_case        | orders, user_profiles   |
-| Field      | camelCase         | createdAt, emailAddress |
-> -  Justification on why this naming convention was chosen.
-> - Databases serve as the foundation for our collections. Naming them effectively will help clearly describe the data it contains. It should
-> be descriptive and leave no confusion. Watch out for spaces at the beginning or end of database names. MongoDB use JavaScript or JSON-based formats.
-> snake_case is clearer for database and collection names. 
-> - Collections are like containers that holds related documents. Choosing right names for it should tell a detail of what kind of data
-> they hold. Lowercase collection names are preferred. Choosing a camelCase of snake_case either is appropriate. However, they must be consistent.
-> - Fields should be descriptive and simple, they should not leave any confusion. They should hold lower cases to keep things uniform
-> and simple and stay the course with whatever naming convention we choose, hold with it. Using camelCase for field name helps with this. 
-
- 
-**3.2 Connecting**
-```text
-Connect to a running instance of MongoDB (preferred to be your MongoDB Atlas instance). 
-- What was the connection string used to connect to your instance of MongoDB? 
-Give the connection string and a complete CLI command using the MongoDB shell. 
-Example: mongos mongodb://192.168.0.5:9999/foo 
-```
-![img.png](assets/images/step-3-002.png)
- 
-**3.2 Database Creation**
->Create and use a database named:
-> * saas_bed_portfolio_2026S1
-> 
-> where YYYY is the Year and SN in the semester, for example S1
-> * How did you create the database using the CLI?
-> -> using : use saas_bed_portfolio_2026S1, from the CLI. 
-> * Did you encounter any issues when creating the database? 
-> -> Yes, I had MongoServerError: bad auth :authentication failed due to wrong password. 
-> * If you did, how did you resolve them? 
-> -> Inserted the correct credentials to connect to my MongoDB Atlas  
-
-![img.png](assets/images/step-3-002.2.png)
-
-
-**3.3 Schema Design for Collection**
-> An example of the possible data that may be stored in this collection.
-> 
-| Data Item       | Suggested Data Type | Example Data              |
-|-----------------|---------------------|---------------------------|
-| title           | String              | Aliens                    |
-| year            | Integer             | 2009                      |
-| writers         | Array of strings    | Sean Bean, Isaac Newton   |
-| franchise       | String              | Avatar                    |
-| running time    | Integer (minutes)   | 162                       |
-| budget          | Long integer (USD)  | 237000000                 |
-| actors          | Array of strings    | Kiefer Sutherland, Rex    |
-| directors       | Array of strings    | Patrick Stewart           |
-| summary         | String              | Ipsum lorem exa dux       |
-| random          | Integer (Double)    | 0.44                      |
-| imdb id         | String              | tt0499549                 |
-| imdb rating     | Integer             | 7.9                       |
-| rotten tomatoes | Integer             | 34                        |
-| genres          | Array of Strings    | Drama, Sci-Fi             |
-| updated_at      | Date                | 2026-05-22T08:53:23.387Z  |
-
-> What data type are you using for each field?
-> The movie collection will store a variety of MongoDB data types. String data types will be used for 
-> fields such as `title`, `franchise`, `summary`, and `imdb_id`. 
-> Integer data types will be used for `year`, `running_time`, and `rotten_tomatoes`. 
-> The budget field will use the Long data type to support large currency values.
-> Arrays of strings will be used for `writers`, `actors`, `directors`, and `genres` because multiple values can be stored in a single field.
-> The `random` field will use the Double data type to store decimal values.
-
-
-> Identify the validation rules you wish to apply
-> * title is required and must be a string.
-> * year is required and must be an integer.
-> * year should be between 1888 and 2100.
-> * running_time must be a positive integer.
-> * budget must be a long integer and cannot be negative.
-> * writers, actors, directors, and genres must be arrays of strings.
-> * imdb_id is required and must follow the IMDB format, such as tt0499549.
-> * rotten_tomatoes must be an integer between 0 and 100.
-> * random must be a double between 0 and 1.
-> * updated_at must be date values.
-> * box_office → Long / Int
-> * imdb_rating → Double or Null
-> * imdb_id → String or Null
-> * rotten_tomatoes → Int or Null 
- 
-
-> Provide the schema validation code for the collection. 
-
-```php
-
-db.createCollection("films", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["title"],
-      description: "Film collection documents",
-
-      properties: {
-        _id: {
-          bsonType: "objectId",
-          description: "Unique document identifier"
-        },
-
-        title: {
-          bsonType: "string",
-          description: "Movie title"
-        },
-
-        year: {
-          bsonType: "int",
-          description: "Year the film was released"
-        },
-
-        writers: {
-          bsonType: "array",
-          description: "List of writers",
-          items: {
-            bsonType: "string"
-          }
-        },
-
-        franchise: {
-          bsonType: "string",
-          description: "Film franchise name if applicable"
-        },
-
-        running_time: {
-          bsonType: "int",
-          description: "Running time in minutes"
-        },
-
-        budget: {
-          bsonType: ["int", "long", "null"],
-          description: "Production budget"
-        },
-
-        box_office: {
-          bsonType: ["int", "long", "null"],
-          description: "Box office revenue"
-        },
-
-        actors: {
-          bsonType: "array",
-          description: "List of actors",
-          items: {
-            bsonType: "string"
-          }
-        },
-
-        directors: {
-          bsonType: "array",
-          description: "List of directors",
-          items: {
-            bsonType: "string"
-          }
-        },
-
-        summary: {
-          bsonType: "string",
-          description: "Brief plot summary"
-        },
-
-        random: {
-          bsonType: ["double", "int"],
-          description: "Random value used for sampling"
-        },
-
-        genres: {
-          bsonType: "array",
-          description: "List of genres",
-          items: {
-            bsonType: "string"
-          }
-        },
-
-        imdb_id: {
-          bsonType: ["string", "null"],
-          description: "IMDb identifier"
-        },
-
-        imdb_rating: {
-          bsonType: ["double", "int", "null"],
-          description: "IMDb rating"
-        },
-
-        rotten_tomatoes: {
-          bsonType: ["int", "null"],
-          description: "Rotten Tomatoes score"
-        },
-
-        updated_at: {
-          bsonType: "date",
-          description: "Date the document was last updated"
-        }
-      }
-    }
-  }
-});
-```
-
-**3.4 Collection Creation**
-
-Using db.collections.insertOne()
-
-```php
-db.films.insertOne({
- title: "Star Trek: Nemesis",
- year: 2002,
- writers: ["John Logan", "Rick Berman", "Brent Spiner"],
- summary: "A clone of Picard, created by the Romulans, assassinates the Romulan Senate, assumes absolute power, and lures Picard and the Enterprise to Romulus under the false pretext of a peace overture.",
- franchise: "Star Trek",
- running_time: 117,
- budget: 60000000,
- box_office: 67300000
- })
-```
-
-![img.png](assets/images/step-3-004.png)
-
-**4.1 Inserting Data**
-
-```php
-db.films.insertOne({
- title: "My Dearest Assassin",
- year: 2026,
- writers: ["Watthana Veerayawatthana"],
- actors:["Pimchanok Luevisadpaibul", "Tor Thanapob Leeratanakachorn", "Sivakorn Adulsuttikul"],
- running_time: 127,
- budget: 237000000,
- genres: ["Action", "Romance", "Thai", "Thriller", "Drama"]
- })
-```
-
-![img_1.png](assets/images/step-4-001.png)
-![img.png](assets/images/step-4-001-2.png)
-
-**4.2 Inserting Data from File**
-```text
-film-data-json.txt
-```
-
-```php
-$ mongoimport --uri "mongodb+srv://20070505_db_user:<MY_PASSWORD>@cluster0.wxkuth2.mongodb.net/saas_bed_portfolio_2026S1" --collection "
-films" --type json --file "film-data-json.txt" --jsonArray
-```
-
-![step-4-002.png](assets/images/step-4-002.png)
-
-**4.3 Inserting Data**
-
-```php
-db.films.insertMany([
-{
-title: "Pride",
-year: 2014,
-writers: ['Stephen Beesform'],
-franchise: "",
-running_time: 192,
-imdb_rating: 7.8
-},
-{
-title: "Pee Wee Herman's Big Adventure",
-},
-{
-title: "A Fictional Tale as a Fake Film",
-}
-])
-{
-```
-
-![img.png](assets/images/step-4-003.png)
-
-### Step 5: CRUD - Queries
-
-**5.1 Retrieve all documents**
-```php
-db.films.countDocumnents(); 
-db.films.find();
-```
-![img.png](assets/images/step-5-002.png)
-
-
-**5.2 Retrieve all films written by ...**
-
-```php
-db.film.find(
-{
-    writers: ["James Cameron"]
-})
-```
-
-![img.png](assets/images/step-5-002.png)
-
-**5.3 Retrieve films with actor(s)**
-
-```php
-db.films.find({ actors: "Kate Winslet"}); 
-```
-![img.png](assets/images/step-5-003.png)
-
-**5.4 Retrieve films from a franchise ...**
-
-```php
-db.films.find({franchise: "The Hobbit"});
-db.films.find({franchise: "The Hobbit"}).count();
-```
-![img_1.png](assets/images/step-5-004.png)
-### Explanation
-
-This query retrieves all film documents where the `franchise` field is equal to `"The Hobbit"`. 
-
-**5.5 Retrieve films released in range ...**
-
-```php
-db.films.find({
-  year: {
-    $gte: 1980,
-    $lte: 2020
-  }
-})
-```
-![img.png](assets/images/step-5-005.png)
-
-**5.6 Retrieve films longer than ...**
-```php
-db.films.find({ running_time: { $gt: 120} })
-```
-![img.png](assets/images/step-5-006.png)
-
-**5.7 Retrieve films released in range ...**
-```php
-db.films.find({ year: { $gt: 2022} })
-```
-![img.png](assets/images/step-5-007.png)
-
-## Step 6: CRUD - Updates
-**6.1 Update documents with a synopsis**
-```php
-db.films.updateOne(
-{
-title: "The Hobbit: The Desolation of Smaug" },
-{
-$set: {
-summary:  "The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical ring."
-},
-})
-```
-```php
-db.films.updateOne(
-{
-title: "The Hobbit: An Unexpected Journey" },
-{
-$set: {
-summary:  "A reluctant hobbit, Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim their mountain home - and the gold within it - from the dragon Smaug."
-},
-})
-```
-![img_1.png](assets/images/step-6-001.png)
-
-
-**6.2 Update document with an actor**
-
-```php
-db.films.updateOne(
-{ title: "Pulp Fiction" },
-{
-$push: {
-actors: {
-$each: ["Samuel L. Jackson"]}
-} })
-```
-![img.png](assets/images/step-6-002.png)
-![img.png](assets/images/step-6-022.png)
-
-> There is no film with the name titled "Pulp Fiction" found. 
-
-```php
-db.films.updateOne(
-  { title: "Star Trek VI: The Undiscovered Country" },
-  {
-    $push: {
-      actors: {
-        $each: [
-          "William Shatner",
-          "Leonard Nimoy",
-          "DeForest Kelley",
-          "James Doohan",
-          "Christopher Plummer",
-          "Walter Koenig",
-          "Nichelle Nichols",
-          "George Takei",
-          "Kim Cattrall",
-          "David Warner"
-        ]
-      }
-    }
-  }
-)
-```
-![img.png](assets/images/step-6-002-2.png)
-
-
-
-
-```php
-db.films.updateOne(
-  { title: "Star Trek: Nemesis" },
-  {
-    $push: {
-      actors: {
-        $each: [
-          "Patrick Stewart",
-          "Jonathan Frakes",
-          "Brent Spiner",
-          "LeVar Burton",
-          "Michael Dorn",
-          "Gates McFadden",
-          "Marina Sirtis"
-        ]
-      }
-    }
-  }
-)
-```
-![img.png](assets/images/step-6-002-4.png)
-
-```php
-db.films.insertOne(
-{ title: "Star Trek VI: The Undiscovered Country" }
-)
- 
-
-db.films.updateOne(
-  { title: "Star Trek VI: The Undiscovered Country" },
-  {
-    $push: {
-      actors: {
-        $each: [
-          "Patrick Stewart",
-          "Jonathan Frakes",
-          "Brent Spiner",
-          "LeVar Burton",
-          "Michael Dorn",
-          "Gates McFadden",
-          "Marina Sirtis"
-        ]
-      }
-    }
-  }
-)
-```
-![img.png](assets/images/step-6-002-3.png)
-
-## Step 7: CRUD - Searches 
-**7.1 Searching for titles with ...**
-
-```php 
-db.films.find({
-title: { $regex: "^T" }
-})
-```
-
-![img.png](assets/images/step-7-001.png)
-
-### Explanation
-
-This query uses a regular expression to find all films where the `title` field begins with the letter "T".
-The `^` symbol indicates the start of the string.
-
-**7.2 Searching for ...**
-```php
-db.films.find({
-genre: 
-})
-```
-
-![img.png](assets/images/step-7-002.png)
-
-### Explanation 
-* $regex: "th" searches for the letters "th" anywhere in the genre field
-* $options: "i" makes the search case-insensitive.
-
-**7.3 Searching for synopses with... and not ...**
-```php
-db.films.find({
-summary: {
-    $regex: "Captain",
-    $options: "i",
-    },
-$nor: [{
-    summary: {
-        $regex: "Pike",
-        $options: "i"
-        }
-    }]
-})
-```
-![img_1.png](assets/images/step-7-003.png)
-
-### Explanation
-* This query finds films whose synopsis (`summary`) contains the word "Captain" but does not contain the word "Pike". 
-* The `i` option makes the search case-insensitive.
-
-**7.4 Searching for synopses with... or ...**
-```php
-db.films.find({
-$or: [ {summary: /London/i },
-{summary: /Brooklyn/i },
-] })
-```
-![img.png](assets/images/step-7-004.png)
-
-### Explanation
-
-* This query uses the `$or` operator to find films whose synopsis (`summary`) contains either the word "London" or the word "Brooklyn". 
-* The `i` option makes the search case-insensitive.
-
-**7.5 Searching for synopses with ... and ...**
-
-```php
-db.films.find({
-$and: [
-  { summary: /team/i },
-  { summary: /search/i }
-  ]
-... })
-```
-![img.png](assets/images/step-7-005.png)
-
-### Explanation
-
-- This query uses the `$and` operator to find films where the `summary` field contains both the word **"team"** and the word **"search"**. 
-- Each regular expression checks for one word, and both conditions must be true for a document to be returned.
-- The `i` option makes the search case-insensitive.
-
-## Step 8: CRUD - Deletions
-**8.1 Removing a film using its title ...** 
-```php
-db.films.deleteOne({ title: "Pee Wee Herman's Big Adventure"})
-```
-![img.png](assets/images/step-8-001.png)
-
-
-**8.2 Remove a film by ID ...**
-```php
-db.films.findOne({ title:  "Fictionally Fake Film"})
-db.films.deleteOne({ _id: ObjectId('6a2e97eb9d3b66404c63b11a') })
-
-```
-![img_1.png](assets/images/step-8-002.png)
-
-> Find the ObjectId for the film titled "Fictionally Fake Film", then delete film by _id. 
-
-**8.3 Removing multiple films**
-```php
-db.films.deleteMany({
-title: {
- $regex: "Fictional",
- $options: "i"
- }
-})
-```
-![img.png](assets/images/step-8-003.png)
-
-## Step 9: NoSQL Indexes
-
-**9.1 Indexes for Sorting**
-
-```php
- db.films.createIndex({
- title: 1,
- })
-
- db.films.createIndex({
- year: 1,
- title: 1
- })
-
-db.films.createIndex({
- year: 1,
- title: 1,
- actors: 1,
- franchise: 1 })
-
-```
-
-### Index 1
-Creates an ascending index on the `title` field to improve query performance when searching or sorting by title.
-
-### Index 2
-Creates a compound index on the `year` and `title` fields.
-Queries that filter or sort by year and title can use this index.
-
-### Index 3
-Creates a compound index on the `year`, `title`, `actors`, and `franchise` fields in that order.
-
-![img.png](assets/images/step-9-001.png)
-
-### Explanation 
-
-* This query deletes all films whose title contains the exact word "Fictional".
-* The `$options: "i"` option makes the search case-insensitive, meaning it will match "Fictional", "fictional", "FICTIONAL", and other variations of capitalization.
-
-**9.2 Indexes for Full Text Search**
-
-```php
-db.films.createIndex({
- title: "text",
- summary: "text"
-})
-```
-![img.png](assets/images/step-9-002.png)
-
-### Explanation
-
-This command creates a text index on the `title` and `summary` fields.
-A text index allows MongoDB to perform full-text searches, making it possible to search for words and phrases within film titles and summaries using the `$text` operator.
-
-**9.3 Verifying Execution Plans** 
-* Check the execution plan for a query that finds the films with a title containing "Star".
-* Check if the created index is being used. 
-
-```php
-db.films.find({
-title: /Star/
-}).explain("executionStats")
-```
-
-![img_1.png](assets/images/step-9-003.png)
-
-> stage: 'IXSCAN', 
-> indexName: 'title_1'
-
-> This query checks the execution plan for films with titles starting with "Star". 
-> In the explain output, `IXSCAN` means the title index is being used. 
-
-
-**9.4 Differences in Indexes**
-
-### Differences Between Sorting Indexes and Full-Text search indexes
-- A standard index(such as an ascending index on `title`) is designed to improve the performance of queries that filer,
-sort, or retrieve data based on specific field values. 
-- A full-text search index is designed for searching words and phrases within text fields. Instead of matching exact 
-values, MongoDB breaks text into searchable terms and allows users for keywords contained within documents.
-
-### When to use each: 
-
-**Sorting Index**
-> - Best used when filtering or sorting data by specific fields: 
-> - For example; 
->   - Finding films released in a particular year.
->   - Sorting films alphabetically by title.
->   - Looking up a film by its exact title.
-
-**Full-Text search Index**
-> - Best used when searching for words or phrases withing large text fields. 
-> - For example;
->   - Finding films whose summary contains the word "Captain".
->   - Searching for films related to "outdoor adventure"
->   - Looking for keywords within titles and summaries.
-
-## Step 10: Aggregation
-
-**10.1 Counting Documents** 
-```php
-b.films.aggregate([
-{
- $match: { franchise: "Star Trek" }
-},
-{ $count: "star_trek_films" }
-])
-```
-![img.png](assets/images/step-10-001.png)
-
-> This aggregation pipeline first filters the collection to include only documents where the `franchise` field is `"Star Trek"` using `$match`.
-> The `$count` stage then counts the number of matching documents and returns the total number of Star Trek films.
- 
-**10.2 Mean Values** 
-```php
-db.films.aggregate([
-{
- $group: {
-    _id: null,
-    average_budget: { $avg: "$budget" },
-    average_box_office: { $avg: "$box_office" }
-   }
-  }
-])
-```
-![img.png](assets/images/step-10-002.png)
-
-> - This aggregation pipeline groups all documents together using `_id: null`. 
-> - The `$avg` operator is then used to calculate the average value of the `budget` field and the average value of the `box_office` field.
-> - Both averages are displayed in the result.
-
-**10.3 Profit Earnings** 
-* This aggregation query, or queries, calculates the profit (box office - budget) for the films, showing just the film title and the profit.
-* Films with no budget and/ or no box office should NOT be included in the results.
-* This aggregation pipeline first filters out any films that do not have both a budget and box office value using `$match`.
-* The `$project` stage then displays only the film title and a calculated profit field. 
-* The profit is calculated by subtracting the `budget` from the `box_office` using the `$subtract` operator.
-
-```php
-db.films.aggregate([
-{ $match: {
-budget: { $ne: null },
-box_office: { $ne: null }
-        }
-    },
-{ $project: {
-    _id: 0,
-    title: 1,
-    profit: {
-    $subtract: ["$box_office", "$budget"] }
-        }
-    }
-])
-```
-![step-10-003.png](assets/images/step-10-003.png)
-
-**10.4 Grouping Data**
-
-* This aggregation pipeline groups films by the `franchise` field using the `$group` stage.
-* The `$sum` operator increments a counter for each document in the group, producing the total number of films in each franchise. 
-* The franchise name is displayed in the `_id` field and the number of films is displayed in `film_count`.
-
-```php
-db.films.aggregate([{
-$group: {
-  _id: "$franchise",
-  film_count: { $sum: 1}
-    }
-  }
-])
-```
-![img_1.png](assets/images/step-10-004.png)
-
-
-
 ## Software as a Service - Back-End Development
-
-#
 
 ## Diploma of Information Technology (Advanced Programming)  
 
@@ -958,15 +123,15 @@ This step provides a checklist for yout to ensure you have set up the assessment
 
 Put an X between each of the pairs of `[ ]` when you have completed the task:
 
-> - [ ] Create a new **empty** & **private** repository on GitHub (or the equivalent).
-> - [ ] Repository is named `xxx-ICT50220-SaaS-2-BED-NoSQL` replacing `xxx` with your initials.
-> - [ ] Cloned the repository to your local PC.
-> - [ ] Created a new folder called `assets` inside your cloned repository.
-> - [ ] Created an empty `ReadMe.md`.
-> - [ ] Created an empty `.gitignore` file in the assets folder.
-> - [ ] Downloaded the provided `sample.gitignore` file, moved it into the repository folder, and renamed it to `.gitignore`.
-> - [ ] Placed a copy of the assessment's Word document into the repository folder.
-> - [ ] Added all the new files and folders to the repository, commited them to version control, and pushed them to your private remote repository.
+> - [X] Create a new **empty** & **private** repository on GitHub (or the equivalent).
+> - [X] Repository is named `xxx-ICT50220-SaaS-2-BED-NoSQL` replacing `xxx` with your initials.
+> - [X] Cloned the repository to your local PC.
+> - [X] Created a new folder called `assets` inside your cloned repository.
+> - [X] Created an empty `ReadMe.md`.
+> - [X] Created an empty `.gitignore` file in the assets folder.
+> - [X] Downloaded the provided `sample.gitignore` file, moved it into the repository folder, and renamed it to `.gitignore`.
+> - [X] Placed a copy of the assessment's Word document into the repository folder.
+> - [X] Added all the new files and folders to the repository, commited them to version control, and pushed them to your private remote repository.
 
 ---
 
@@ -978,9 +143,11 @@ This step verifies you understand concepts that includes, but is not limited to 
 
 Briefly explain what is meant by the terms database, collection, document and field in terms of MongoDB.
 
-> ANSWER_HERE
->
-> 
+> - A Document is the smallest unit of data storage, represented in BSON (Binary JSON) format in MongoDB.
+> - A collection  is a group of related documents that correspond to an entity.
+> - Database is a container for collections. A group of collections is housed in a database.
+> - Fields are the fundamental building blocks of MongoDB documents, similar to columns in relational databases.
+>  They define the structure and data stored within a document. A field is represented as a key-value pair.
 
 ## 2.2 NoSQL Database Types
 
@@ -993,16 +160,29 @@ Briefly outline the key features and advantages for TWO of the following NoSQL d
 
 > #
 
-## Database Type 1: NAME_HERE
+## Database Type 1: Document Database
 >
->  ANSWER_HERE
+>  A document database stores data as flexible documents, typically in JSON or BSON format.
+Each document can have a different structure, making the database highly adaptable to changing requirements.
+
+Advantages:
+
+* Flexible schema allows easy handling of unstructured or semi-structured data.
+* Scales horizontally across multiple servers.
+* Stores complex objects in a single document, reducing the need for joins.
+* Well suited for content management systems, e-commerce platforms, and web applications.
 
 
-> #
-
-## Database Type 2: NAME_HERE
+## Database Type 2: Graph Database
 >
-> ANSWER_HERE 
+> A graph database stores data as nodes (entities) and edges (relationships), making relationships a first-class component of the data model.
+
+Advantages:
+
+* Efficiently handles highly connected data.
+* Enables fast traversal of complex relationships.
+* Ideal for social networks, recommendation engines, fraud detection, and network analysis.
+* Simplifies queries involving multiple relationships compared to relational databases.
 
 
 ## 2.3 NoSQL Database Systems
@@ -1011,40 +191,60 @@ Provide one example product (commercial or open source) for each of your NoSQL N
 
 You may **NOT** include _MongoDB_ which is an example of a _Document Database_.
 
-> #
+```text
+Provide one example product (commercial or open source) for each of your NoSQL Database types.
+You may **NOT** include _MongoDB_which is an example of a _Document Database_.
 
-## Database Type 1: NAME_HERE
->
-> ANSWER_HERE
+One example product for each of the NoSQL Database types:
+- Document Database: Couchbase | [couch-base](https://docs.couchbase.com/home/index.html)
+  Couchbase combines document-oriented and key-value data models, offering flexibility and high performance
+  
+- Graph Database: Neo4j | [neo4j](https://neo4j.com/product/neo4j-graph-database/)
+  Neo4j is a native graph database designed to store, manage, and query connected data efficiently.
 
-
-> #
-
-## Database Type 2: NAME_HERE
->
-> ANSWER_HERE
+```
 
 
 ## 2.4 NoSQL Database Uses
-
 Provide an example for each of your NoSQL database of the situation when your database types may provide a benefit when used.
 
 The situations/application of the database types must be different.
 
-> #
+```text
+Provide one example product (commercial or open source) for each of your NoSQL Database types.
+You may **NOT** include _MongoDB_which is an example of a _Document Database_.
 
-## Database Type 1: NAME_HERE
->
-> ANSWER_HERE
+One example product for each of the NoSQL Database types:
+- Document Database: Couchbase | [couch-base](https://docs.couchbase.com/home/index.html)
+  Couchbase combines document-oriented and key-value data models, offering flexibility and high performance
+  
+- Graph Database: Neo4j | [neo4j](https://neo4j.com/product/neo4j-graph-database/)
+  Neo4j is a native graph database designed to store, manage, and query connected data efficiently.
 
+```
 
-> #
+## Database Type 1: Document Database = Couchbase
+```text
+The situations/application of the database types must be different.
 
-## Database Type 2: NAME_HERE
->
-> ANSWER_HERE
+1. Document Database = Couchbase  
+   Situation : Due to Couchbase's high performance and low latency it is suitable for a variety of use cases such as:
+    - Real-Time Analytics: Couchbase is ideal for performing real-time analytics on a large data sets.
+    - E-Commerce and Customer Management: Couchbase is also used for E-commerce to manage transactions efficiently and
+      can manage high volumes of customer data.
+```
 
-
+## Database Type 2: Graph Database
+```text
+Situation:  Due Neo4j's ability to manage large-scale, interconnected data it is well-suited for a variety of use cases such as:
+   - Fraud Detection: Neo4j's graph model makes it easy to identify patterns and anomalies in these relationships, allowing 
+     fraud analysts to quickly detect and prevent fraudulent activity. Neo4j can be used to build fraud detection systems for 
+     industries like banking, insurance and e-commerce.    
+   - Healthcare management systems: Healthcare involves managing and analyzing complex relationships between patients, medical professional, 
+     medical records and treatments. Neo4j's graph-based model is well-suited to represent these relationships as a network of nodes and 
+     relationships. Neo4j can be used to build healthcare management systems that allow doctors and healthcare professionals to navigate and analyze 
+     medical data and patient records. 
+```
 
 # Step 3: NoSQL Databases & Collections
 
@@ -1052,42 +252,58 @@ The situations/application of the database types must be different.
 
 What naming convention will you use for the database, collections and fields used in the assessment scenario?
 
-> ANSWER_HERE
+> For the NoSQL database naming conventions I would select for each convention would be:
 >
->
+| MongoDB    | Recommended Style | Example                 |
+|------------|-------------------|-------------------------|
+| Database   | snake_case        | student_portal          |
+| Collection | snake_case        | orders, user_profiles   |
+| Field      | camelCase         | createdAt, emailAddress |
 
 Justify why did you choose this naming convention?
+> -  Justification on why this naming convention was chosen.
+> - Databases serve as the foundation for our collections. Naming them effectively will help clearly describe the data it contains. It should
+    > be descriptive and leave no confusion. Watch out for spaces at the beginning or end of database names. MongoDB use JavaScript or JSON-based formats.
+    > snake_case is clearer for database and collection names.
+> - Collections are like containers that holds related documents. Choosing right names for it should tell a detail of what kind of data
+    > they hold. Lowercase collection names are preferred. Choosing a camelCase of snake_case either is appropriate. However, they must be consistent.
+> - Fields should be descriptive and simple, they should not leave any confusion. They should hold lower cases to keep things uniform
+    > and simple and stay the course with whatever naming convention we choose, hold with it. Using camelCase for field name helps with this.
 
-> ANSWER_HERE
-> 
->
+
+
 
 ## 3.2 Connecting
 
-- Connect to a running instance of MongoDB (preferred to be your MongoDB Atlas instance).
+```text
+Connect to a running instance of MongoDB (preferred to be your MongoDB Atlas instance). 
+- What was the connection string used to connect to your instance of MongoDB? 
+Give the connection string and a complete CLI command using the MongoDB shell. 
+Example: mongos mongodb://192.168.0.5:9999/foo 
+```
 
 Add the Connection String used to connect to your MongoDB Atlas instance:
 
 > ```js
-> 	MONGODB_CONNECTION_STRING_HERE
+> $ mongosh mongodb+srv://20070505_db_user:cZQlHQFSDaQFgkBu@cluster0.wxkuth2.mongodb.net/
 > ```
-
-
-#
 
 ## 3.3 Database Creation
 
 - Create and use a database named `saas_bed_portfolio_2025s2`.
 
 > ```js
-> 	CREATE_AND_USE_DATABASE_IN_MONGODB_ANSWER_HERE
+> use saas_bed_portfolio_2026S1
 > ```
 
 Did you encounter any issues when creating the database? If you did, how did you resolve them?
 
-> ANSWER_HERE
->
+> Yes, I had MongoServerError: bad auth :authentication failed due to wrong password.
 
+If you did, how did you resolve them?
+> Inserted the correct credentials to connect to my MongoDB Atlas
+
+![img.png](assets/images/step-3-002.2.png)
 
 ## 3.4 Schema Design for Collection
 
@@ -1097,47 +313,187 @@ In the `notes` column, add any clarifying details (such as rules) that may be us
 
 Replace `FIELD_NAME_HERE` and `DATA_TYPE_HERE` in the table below.
 
-> | Item                | Field Name      | MongoDB Data Type | Notes / Rules         |
-> |---------------------|-----------------|-------------------|-----------------------|
-> |                     | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> | Title               | FIELD_NAME_HERE | DATA_TYPE_HERE    | four digit year       |
-> | Year                | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> | Writers             | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> | Summary             | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> | Franchise           | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> | Running Time        | FIELD_NAME_HERE | DATA_TYPE_HERE    | minutes               |
-> | Budget              | FIELD_NAME_HERE | DATA_TYPE_HERE    | USD $                 |
-> | Box Office Takings  | FIELD_NAME_HERE | DATA_TYPE_HERE    | USD $                 |
-> |                     | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> |                     | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> |                     | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> |                     | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> |                     | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
-> |                     | FIELD_NAME_HERE | DATA_TYPE_HERE    |                       |
+| Field Name      | MongoDB Data Type  | Example Data              |
+|-----------------|--------------------|---------------------------|
+| title           | String             | Aliens                    |
+| year            | Integer            | 2009                      |
+| writers         | Array of strings   | Sean Bean, Isaac Newton   |
+| franchise       | String             | Avatar                    |
+| running time    | Integer (minutes)  | 162                       |
+| budget          | Long integer (USD) | 237000000                 |
+| actors          | Array of strings   | Kiefer Sutherland, Rex    |
+| directors       | Array of strings   | Patrick Stewart           |
+| summary         | String             | Ipsum lorem exa dux       |
+| random          | Integer (Double)   | 0.44                      |
+| imdb id         | String             | tt0499549                 |
+| imdb rating     | Integer            | 7.9                       |
+| rotten tomatoes | Integer            | 34                        |
+| genres          | Array of Strings   | Drama, Sci-Fi             |
+| updated_at      | Date               | 2026-05-22T08:53:23.387Z  |
 
+> What data type are you using for each field?
+> The movie collection will store a variety of MongoDB data types. String data types will be used for
+> fields such as `title`, `franchise`, `summary`, and `imdb_id`.
+> Integer data types will be used for `year`, `running_time`, and `rotten_tomatoes`.
+> The budget field will use the Long data type to support large currency values.
+> Arrays of strings will be used for `writers`, `actors`, `directors`, and `genres` because multiple values can be stored in a single field.
+> The `random` field will use the Double data type to store decimal values.
+
+
+> Identify the validation rules you wish to apply
+> * title is required and must be a string.
+> * year is required and must be an integer.
+> * year should be between 1888 and 2100.
+> * running_time must be a positive integer.
+> * budget must be a long integer and cannot be negative.
+> * writers, actors, directors, and genres must be arrays of strings.
+> * imdb_id is required and must follow the IMDB format, such as tt0499549.
+> * rotten_tomatoes must be an integer between 0 and 100.
+> * random must be a double between 0 and 1.
+> * updated_at must be date values.
+> * box_office → Long / Int
+> * imdb_rating → Double or Null
+> * imdb_id → String or Null
+> * rotten_tomatoes → Int or Null
 
 - Provide the schema validation code for the collection.
 
-> ```js
-> 	SCHEMA_VALIDATION_CODE_HERE
-> ```
+ ```js
+ 	db.createCollection("films", {
+            validator: {
+            $jsonSchema: {
+            bsonType: "object",
+            required: ["title"],
+            description: "Film collection documents",
+    
+          properties: {
+            _id: {
+              bsonType: "objectId",
+              description: "Unique document identifier"
+            },
+    
+            title: {
+              bsonType: "string",
+              description: "Movie title"
+            },
+    
+            year: {
+              bsonType: "int",
+              description: "Year the film was released"
+            },
+    
+            writers: {
+              bsonType: "array",
+              description: "List of writers",
+              items: {
+                bsonType: "string"
+              }
+            },
+    
+            franchise: {
+              bsonType: "string",
+              description: "Film franchise name if applicable"
+            },
+    
+            running_time: {
+              bsonType: "int",
+              description: "Running time in minutes"
+            },
+    
+            budget: {
+              bsonType: ["int", "long", "null"],
+              description: "Production budget"
+            },
+    
+            box_office: {
+              bsonType: ["int", "long", "null"],
+              description: "Box office revenue"
+            },
+    
+            actors: {
+              bsonType: "array",
+              description: "List of actors",
+              items: {
+                bsonType: "string"
+              }
+            },
+    
+            directors: {
+              bsonType: "array",
+              description: "List of directors",
+              items: {
+                bsonType: "string"
+              }
+            },
+    
+            summary: {
+              bsonType: "string",
+              description: "Brief plot summary"
+            },
+    
+            random: {
+              bsonType: ["double", "int"],
+              description: "Random value used for sampling"
+            },
+    
+            genres: {
+              bsonType: "array",
+              description: "List of genres",
+              items: {
+                bsonType: "string"
+              }
+            },
+    
+            imdb_id: {
+              bsonType: ["string", "null"],
+              description: "IMDb identifier"
+            },
+    
+            imdb_rating: {
+              bsonType: ["double", "int", "null"],
+              description: "IMDb rating"
+            },
+    
+            rotten_tomatoes: {
+              bsonType: ["int", "null"],
+              description: "Rotten Tomatoes score"
+            },
+    
+            updated_at: {
+              bsonType: "date",
+              description: "Date the document was last updated"
+            }
+          }
+        }
+    }
+});
+```
 
+![img.png](assets/images/step-3-005-0.png)
 
 
 ## 3.5 Collection Creation
 
 - Create a new collection named _films_ and insert the provided data (full statement)
 
-> ```js
-> 	CREATE_COLLECTION_IN_MONGODB_ANSWER_HERE
-> ```
+Using db.collections.insertOne()
 
+> ```js
+db.films.insertOne({
+title: "Star Trek: Nemesis",
+year: 2002,
+writers: ["John Logan", "Rick Berman", "Brent Spiner"],
+summary: "A clone of Picard, created by the Romulans, assassinates the Romulan Senate, assumes absolute power, and lures Picard and the Enterprise to Romulus under the false pretext of a peace overture.",
+franchise: "Star Trek",
+running_time: 117,
+budget: 60000000,
+box_office: 67300000
+})
+> ```
 
 Screen Shot:
 
-![Step 3.5 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
-
-
+![img.png](assets/images/step-3-004.png)
 
 # Step 4: CRUD - Create
 
@@ -1149,10 +505,20 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+db.films.insertOne({
+    title: "My Dearest Assassin",
+    year: 2026,
+    writers: ["Watthana Veerayawatthana"],
+    actors:["Pimchanok Luevisadpaibul", "Tor Thanapob Leeratanakachorn", "Sivakorn Adulsuttikul"],
+    running_time: 127,
+    budget: 237000000,
+    genres: ["Action", "Romance", "Thai", "Thriller", "Drama"]
+})	
+db.collection_name.find();
 ```
 
-
+![img_1.png](assets/images/step-4-001.png)
+![img.png](assets/images/step-4-001-2.png)
 
 ## 4.2 Inserting Data
 
@@ -1166,10 +532,15 @@ What was the complete command you used to perform the import of the provided sam
 
 Query Solution:
 
-```js
-	db.collection_name.find();
+```text
+film-data-json.txt
 ```
 
+```php
+$ mongoimport --uri "mongodb+srv://20070505_db_user:<MY_PASSWORD>@cluster0.wxkuth2.mongodb.net/saas_bed_portfolio_2026S1" --collection "
+films" --type json --file "film-data-json.txt" --jsonArray
+```
+![step-4-002.png](assets/images/step-4-002.png)
 
 
 ## 4.3 Inserting Data
@@ -1177,6 +548,28 @@ Query Solution:
 Add the provided additional sample data into the films collection in the order provided.
 
 > You do not have to add any details to the answers.md for this question.
+
+```text
+db.films.insertMany([
+{
+title: "Pride",
+year: 2014,
+writers: ['Stephen Beesform'],
+franchise: "",
+running_time: 192,
+imdb_rating: 7.8
+},
+{
+title: "Pee Wee Herman's Big Adventure",
+},
+{
+title: "A Fictional Tale as a Fake Film",
+}
+])
+{
+```
+
+![img.png](assets/images/step-4-003.png)
 
 
 # Step 5: CRUD - Retrieve Queries
@@ -1189,8 +582,10 @@ Add the provided additional sample data into the films collection in the order p
 Query Solution:
 
 ```js
-	db.collection_name.find();
+db.films.countDocumnents(); 
+db.films.find();
 ```
+![img.png](assets/images/step-5-002.png)
 	
 
 
@@ -1201,12 +596,15 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+db.film.find(
+{
+    writers: ["James Cameron"]
+})
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-5-002.png)
 
 
 
@@ -1217,8 +615,10 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+db.films.find({ actors: "Kate Winslet"}); 
 ```
+Screen Shot:
+![img.png](assets/images/step-5-003.png)
 	
 
 
@@ -1229,9 +629,16 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+db.films.find({franchise: "The Hobbit"});
+db.films.find({franchise: "The Hobbit"}).count();
 ```
-	
+
+Screen Shot:
+![img_1.png](assets/images/step-5-004.png)
+
+### Explanation
+
+This query retrieves all film documents where the `franchise` field is equal to `"The Hobbit"`.
 
 
 ## 5.5 Retrieve films released in range…
@@ -1241,12 +648,17 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.find({
+    year: {
+        $gte: 1980,
+        $lte: 2020
+    }
+})
 ```
 	
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-5-005.png)
 
 
 ## 5.6 Retrieve films longer than…
@@ -1256,9 +668,12 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.find({ running_time: { $gt: 120} })
 ```
 
+Screen Shot:
+
+![img.png](assets/images/step-5-006.png)
 
 ## 5.7 Retrieve films released in range…
 
@@ -1267,12 +682,12 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.find({ year: { $gt: 2022} })
 ```
 	
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-5-007.png)
 
 
 
@@ -1285,7 +700,24 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.updateOne(
+    {
+        title: "The Hobbit: The Desolation of Smaug" },
+    {
+        $set: {
+            summary:  "The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical ring."
+        },
+    })
+```
+```js
+db.films.updateOne(
+{
+title: "The Hobbit: An Unexpected Journey" },
+{
+$set: {
+summary:  "A reluctant hobbit, Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim their mountain home - and the gold within it - from the dragon Smaug."
+},
+})
 ```
 	
 
@@ -1297,13 +729,98 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.updateOne(
+    { title: "Pulp Fiction" },
+    {
+        $push: {
+            actors: {
+                $each: ["Samuel L. Jackson"]}
+        } })
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-6-002.png)
+![img.png](assets/images/step-6-022.png)
 
+> There is no film with the name titled "Pulp Fiction" found.
+
+```js
+db.films.updateOne(
+  { title: "Star Trek VI: The Undiscovered Country" },
+  {
+    $push: {
+      actors: {
+        $each: [
+          "William Shatner",
+          "Leonard Nimoy",
+          "DeForest Kelley",
+          "James Doohan",
+          "Christopher Plummer",
+          "Walter Koenig",
+          "Nichelle Nichols",
+          "George Takei",
+          "Kim Cattrall",
+          "David Warner"
+        ]
+      }
+    }
+  }
+)
+```
+![img.png](assets/images/step-6-002-2.png)
+
+
+
+
+```js
+db.films.updateOne(
+  { title: "Star Trek: Nemesis" },
+  {
+    $push: {
+      actors: {
+        $each: [
+          "Patrick Stewart",
+          "Jonathan Frakes",
+          "Brent Spiner",
+          "LeVar Burton",
+          "Michael Dorn",
+          "Gates McFadden",
+          "Marina Sirtis"
+        ]
+      }
+    }
+  }
+)
+```
+![img.png](assets/images/step-6-002-4.png)
+
+```js
+db.films.insertOne(
+{ title: "Star Trek VI: The Undiscovered Country" }
+)
+ 
+
+db.films.updateOne(
+  { title: "Star Trek VI: The Undiscovered Country" },
+  {
+    $push: {
+      actors: {
+        $each: [
+          "Patrick Stewart",
+          "Jonathan Frakes",
+          "Brent Spiner",
+          "LeVar Burton",
+          "Michael Dorn",
+          "Gates McFadden",
+          "Marina Sirtis"
+        ]
+      }
+    }
+  }
+)
+```
+![img.png](assets/images/step-6-002-3.png)
 
 # Step 7: CRUD – Searches
 
@@ -1317,13 +834,19 @@ Performing searches on collections.
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.find({
+    title: { $regex: "^T" }
+})
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-7-001.png)
 
+### Explanation
+
+This query uses a regular expression to find all films where the `title` field begins with the letter "T".
+The `^` symbol indicates the start of the string.
 
 
 ## 7.2 Searching for synopses with …
@@ -1333,13 +856,18 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.find({
+    genre: { $regex: "th", $options: "i"} 
+})
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-7-002.png)
 
+### Explanation
+* $regex: "th" searches for the letters "th" anywhere in the genre field
+* $options: "i" makes the search case-insensitive.
 
 
 ## 7.3 Searching for synopses with… and not …
@@ -1349,14 +877,27 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.find({
+    summary: {
+        $regex: "Captain",
+        $options: "i",
+    },
+    $nor: [{
+        summary: {
+            $regex: "Pike",
+            $options: "i"
+        }
+    }]
+})
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img_1.png](assets/images/step-7-003.png)
 
-
+### Explanation
+* This query finds films whose synopsis (`summary`) contains the word "Captain" but does not contain the word "Pike".
+* The `i` option makes the search case-insensitive.
 
 ## 7.4 Searching for synopses with … or …
 
@@ -1365,14 +906,20 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.find({
+    $or: [ {summary: /London/i },
+        {summary: /Brooklyn/i },
+    ] })
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-7-004.png)
 
+### Explanation
 
+* This query uses the `$or` operator to find films whose synopsis (`summary`) contains either the word "London" or the word "Brooklyn".
+* The `i` option makes the search case-insensitive.
 
 ## 7.5 Searching for synopses with … and …
 
@@ -1381,35 +928,37 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.find({
+    $and: [
+        { summary: /team/i },
+        { summary: /search/i }
+    ]})
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-7-005.png)
 
+### Explanation
 
+- This query uses the `$and` operator to find films where the `summary` field contains both the word **"team"** and the word **"search"**.
+- Each regular expression checks for one word, and both conditions must be true for a document to be returned.
+- The `i` option makes the search case-insensitive.
 
 # Step 8: CRUD - Deletions
 
 This step requires you to remove films from the collection.
 
-
 ## 8.1 Removing a film using its title…
 
 - Use the title to delete the film "`Pee Wee Herman's Big Adventure`"
 
-Query Solution:
-
 ```js
-	db.collection_name.find();
+db.films.deleteOne({ title: "Pee Wee Herman's Big Adventure"})
 ```
 
 Screen Shot:
-
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
-
-
+![img.png](assets/images/step-8-001.png)
 
 ## 8.2 Remove a film by ID…
 
@@ -1421,13 +970,15 @@ Delete the film “`Fictionally Fake Film`” by:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+db.films.findOne({ title:  "Fictionally Fake Film"})
+db.films.deleteOne({ _id: ObjectId('6a2e97eb9d3b66404c63b11a') })
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img_1.png](assets/images/step-8-002.png)
 
+> Find the ObjectId for the film titled "Fictionally Fake Film", then delete film by _id.
 
 
 ## 8.3 Removing multiple films…
@@ -1437,12 +988,17 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.deleteMany({
+    title: {
+        $regex: "Fictional",
+        $options: "i"
+    }
+})
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-8-003.png)
 
 
 
@@ -1458,8 +1014,12 @@ Using the films collection, create the indexes to match the following conditions
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.createIndex({
+    title: 1,
+})
 ```
+### Index 1
+Creates an ascending index on the `title` field to improve query performance when searching or sorting by title.
 
 
 - Create an index on the `year` and `title ` fields.
@@ -1467,8 +1027,15 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.createIndex({
+    year: 1,
+    title: 1
+})
 ```
+### Index 2
+Creates a compound index on the `year` and `title` fields.
+Queries that filter or sort by year and title can use this index.
+
 
 - Create an index on the `franchise`, `title`, `actors`, `year` fields.
 - The index must be in the order year, title, actors then franchise.
@@ -1476,9 +1043,17 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.createIndex({
+    year: 1,
+    title: 1,
+    actors: 1,
+    franchise: 1 })
 ```
+### Index 3
+Creates a compound index on the `year`, `title`, `actors`, and `franchise` fields in that order.
 
+Screen Shot:
+![img.png](assets/images/step-9-001.png)
 
 ## 9.2 Indexes for Full Text Search
 
@@ -1487,8 +1062,18 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.createIndex({
+    title: "text",
+    summary: "text"
+})
 ```
+Screen Shot:
+![img.png](assets/images/step-9-002.png)
+
+### Explanation
+
+This command creates a text index on the `title` and `summary` fields.
+A text index allows MongoDB to perform full-text searches, making it possible to search for words and phrases within film titles and summaries using the `$text` operator.
 
 
 ## 9.3 Verifying Execution Plans
@@ -1499,13 +1084,20 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.find({
+    title: /Star/
+}).explain("executionStats")
 ```
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img_1.png](assets/images/step-9-003.png)
 
+> stage: 'IXSCAN',
+> indexName: 'title_1'
+
+> This query checks the execution plan for films with titles starting with "Star".
+> In the explain output, `IXSCAN` means the title index is being used.
 
 
 ## 9.4 Differences in Indexes
@@ -1513,9 +1105,25 @@ Screen Shot:
 - Briefly explain the differences between an index for sorting against an index for full text searches.
 - Include in your answer when each is best suited for use.
 
-> ANSWER_HERE
->
-> 
+> - A standard index(such as an ascending index on `title`) is designed to improve the performance of queries that filer,
+sort, or retrieve data based on specific field values.
+> - A full-text search index is designed for searching words and phrases within text fields. Instead of matching exact
+  values, MongoDB breaks text into searchable terms and allows users for keywords contained within documents.
+
+### When to use each:
+**Sorting Index**
+> - Best used when filtering or sorting data by specific fields:
+> - For example;
+    >   - Finding films released in a particular year.
+    >   - Sorting films alphabetically by title.
+>   - Looking up a film by its exact title.
+
+**Full-Text search Index**
+> - Best used when searching for words or phrases withing large text fields.
+> - For example;
+    >   - Finding films whose summary contains the word "Captain".
+    >   - Searching for films related to "outdoor adventure"
+>   - Looking for keywords within titles and summaries.
 
 
 # Step 10: Aggregation
@@ -1530,8 +1138,18 @@ In this step you will be aggregating data within a collection.
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.aggregate([
+    {
+        $match: { franchise: "Star Trek" }
+    },
+    { $count: "star_trek_films" }
+])
 ```
+Screen Shot:
+![img.png](assets/images/step-10-001.png)
+
+> This aggregation pipeline first filters the collection to include only documents where the `franchise` field is `"Star Trek"` using `$match`.
+> The `$count` stage then counts the number of matching documents and returns the total number of Star Trek films.
 
 
 ## 10.2 Mean budget and box office takings…
@@ -1542,8 +1160,23 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.aggregate([
+    {
+        $group: {
+            _id: null,
+            average_budget: { $avg: "$budget" },
+            average_box_office: { $avg: "$box_office" }
+        }
+    }
+])
 ```
+
+Screen Shot: 
+![img.png](assets/images/step-10-002.png)
+
+> - This aggregation pipeline groups all documents together using `_id: null`.
+> - The `$avg` operator is then used to calculate the average value of the `budget` field and the average value of the `box_office` field.
+> - Both averages are displayed in the result.
 
 
 ## 10.3 Profit earnings
@@ -1554,12 +1187,30 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.aggregate([
+    { $match: {
+            budget: { $ne: null },
+            box_office: { $ne: null }
+        }
+    },
+    { $project: {
+            _id: 0,
+            title: 1,
+            profit: {
+                $subtract: ["$box_office", "$budget"] }
+        }
+    }
+])
 ```
+* This aggregation query, or queries, calculates the profit (box office - budget) for the films, showing just the film title and the profit.
+* Films with no budget and/ or no box office should NOT be included in the results.
+* This aggregation pipeline first filters out any films that do not have both a budget and box office value using `$match`.
+* The `$project` stage then displays only the film title and a calculated profit field.
+* The profit is calculated by subtracting the `budget` from the `box_office` using the `$subtract` operator.
 
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![step-10-003.png](assets/images/step-10-003.png)
 
 
 
@@ -1570,9 +1221,21 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.aggregate([{
+    $group: {
+        _id: "$franchise",
+        film_count: { $sum: 1}
+    }
+}
+])
 ```
 
+Screen Shot:
+![img_1.png](assets/images/step-10-004.png)
+
+* This aggregation pipeline groups films by the `franchise` field using the `$group` stage.
+* The `$sum` operator increments a counter for each document in the group, producing the total number of films in each franchise.
+* The franchise name is displayed in the `_id` field and the number of films is displayed in `film_count`.
 
 
 # Step 11: Triggers
@@ -1589,6 +1252,8 @@ Query Solution:
 	db.collection_name.find();
 ```
 
+![img.png](assets/images/step-11-001-1.png)
+![img_1.png](assets/images/step-11-001-2.png)
 
 
 ## 11.2 Testing the insert trigger works correctly
@@ -1598,10 +1263,30 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.insertOne({
+    title: "Jeffrey",
+    writers: ["Paul Rudnick"],
+    year: 1995,
+    actors: [
+        "Sigourney Weaver",
+        "Patrick Stewart",
+        "Michael T. Weiss",
+        "Steven Weber",
+        "Bryan Batt"
+    ],
+    box_office: 3500000,
+    running_time: 92
+})
+
+db.film_audit.find().sort({ action_date: -1 }).pretty()
+
 ```
+Screen Shots: 
+![img_2.png](assets/images/step-11-002-1.png)
 
+![img.png](assets/images/step-11-002-02.png)
 
+![img_1.png](assets/images/step-11-002-003.png)
 
 ## 11.3 Create trigger for updated data
 
@@ -1613,9 +1298,11 @@ Query Solution:
 	db.collection_name.find();
 ```
 
+
 Screen Shot:
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+![img.png](assets/images/step-11-003-1.png)
+![img.png](assets/images/step-11-003-2.png)
 
 
 
@@ -1626,8 +1313,22 @@ Screen Shot:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.updateOne(
+    { title: "Avatar" },
+    { $set: { budget: 237000000, running_time: 162, box_office: NumberLong("2923000000"), franchise: "Avatar" }
+    })
+
+
+db.films.updateOne(
+    { title: "Avatar"},
+    { $addToSet: { actors: {
+                $each: [ "Sam Worthington", "Zoe Saldana", "Stephen Lang", "Michelle Rodriguez", "Sigourney Weaver"] } }
+    })
 ```
+Screen Shots:
+![img.png](assets/images/step-11-004-1.png)
+![img_1.png](assets/images/step-11-004-2.png)
+![img.png](assets/images/step-11-004-3.png)
 
 
 
@@ -1640,6 +1341,9 @@ Query Solution:
 ```js
 	db.collection_name.find();
 ```
+Screen Shots: 
+![img_2.png](assets/images/step-11-005-1.png)
+![img_1.png](assets/images/step-11-005-2.png)
 
 
 ## 11.6 Testing the delete trigger works correctly
@@ -1649,9 +1353,14 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.films.deleteMany({
+    title: /Dummy/i
+})
 ```
-
+Screen Shots:
+![img.png](assets/images/step-11-006.png)
+![img.png](assets/images/step-11-006-2.png)
+![img_1.png](assets/images/step-11-006-3.png)
 
 
 ## 11.7 Verify the log contains data…
@@ -1661,22 +1370,38 @@ Query Solution:
 Query Solution:
 
 ```js
-	db.collection_name.find();
+	db.film_audit.find(); 
 ```
 
-Screen Shot:
+Screen Shots:
+![img_2.png](assets/images/step-11-007-1.png)
+![img_3.png](assets/images/step-11-007-2.png)
+![img_4.png](assets/images/step-11-007-3.png)
+![img_5.png](assets/images/step-11-007-4.png)
 
-![Step 3.3 Screenshot](assets/SCREENSHOT_FILENAME_HERE.png)
+>This query retrieves all documents from the `film_audit` collection.
+>The `.pretty()` method formats the output to make it easier to read.
+>The results show all audit records created by the insert, update, and delete triggers,
+> including the action performed, the date and time of the action, and the associated film data.
 
+## References
 
-
-
+1. MongoDB Inc. (2025). *MongoDB Manual*. Available at: https://www.mongodb.com/docs/manual/ (Accessed: 02 June 2026).
+2. MongoDB Inc. (2025). *MongoDB Atlas Documentation*. Available at: https://www.mongodb.com/docs/atlas/ (Accessed: 02 June 2026).
+3. MongoDB Inc. (2025). *Atlas Database Triggers*. Available at: https://www.mongodb.com/docs/atlas/atlas-ui/triggers/ (Accessed: 14 June 2026).
+4. North Metropolitan TAFE. *Software as a Service - Back-End Development Assessment Instructions*.
+5. MongoDB University. *MongoDB Tutorials*. Available at: https://learn.mongodb.com/learning-paths/data-modeling-for-mongodb
+6. MongoDB University. *MongoDB Update Operators*. Available at: https://www.mongodb.com/docs/manual/reference/mql/update/?_ga=2.56665699.810066485.1665291537-836515500.1666025886
+7. MongoDB Documentation. *MongoDB collection count*. Available at: https://www.mongodb.com/docs/manual/reference/method/db.collection.countdocuments/?_ga=2.30900342.810066485.1665291537-836515500.1666025886
+8. MongoDB Inc. (2025). *MongoDB Aggregation Operations*. Available at: https://www.mongodb.com/docs/manual/aggregation/?msockid=033f8eb1d90f65eb10b49c3fd8cc6457
+9. MongoDB University. *Intro to MongoDB*. Available at: https://learn.mongodb.com/courses/start-here-introduction-to-mongodb  
+10. MongoDB Inc. (2025). *MongoDB Indexes*. Available at: https://www.mongodb.com/docs/manual/indexes/?msockid=033f8eb1d90f65eb10b49c3fd8cc6457
 # Step 12: Submission
 
 What is the URL for your GitHub (or equivalent) repository for this assessment?
 
 ```text
-add url here
+https://github.com/w3ngm0/kw-ict50220-saas-2-bed-nosql.git
 ```
 
 # END
