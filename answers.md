@@ -326,7 +326,7 @@ db.films.insertOne({
 ```
 
 ![img_1.png](assets/images/step-4-001.png)
-
+![img.png](assets/images/step-4-001-2.png)
 
 **4.2 Inserting Data from File**
 ```text
@@ -619,7 +619,7 @@ $and: [
   ]
 ... })
 ```
-![img.png](step-7-005.png)
+![img.png](assets/images/step-7-005.png)
 
 ### Explanation
 
@@ -627,8 +627,39 @@ $and: [
 - Each regular expression checks for one word, and both conditions must be true for a document to be returned.
 - The `i` option makes the search case-insensitive.
 
+## Step 8: CRUD - Deletions
+**8.1 Removing a film using its title ...** 
+```php
+db.films.deleteOne({ title: "Pee Wee Herman's Big Adventure"})
+```
+![img.png](assets/images/step-8-001.png)
 
 
+**8.2 Remove a film by ID ...**
+```php
+db.films.findOne({ title:  "Fictionally Fake Film"})
+db.films.deleteOne({ _id: ObjectId('6a2e97eb9d3b66404c63b11a') })
+
+```
+![img_1.png](assets/images/step-8-002.png)
+
+> Find the ObjectId for the film titled "Fictionally Fake Film", then delete film by _id. 
+
+**8.3 Removing multiple films**
+```php
+db.films.deleteMany({
+title: {
+ $regex: "Fictional",
+ $options: "i"
+ }
+})
+```
+![img.png](assets/images/step-8-003.png)
+
+### Explanation 
+
+* This query deletes all films whose title contains the exact word "Fictional".
+* The `$options: "i"` option makes the search case-insensitive, meaning it will match "Fictional", "fictional", "FICTIONAL", and other variations of capitalization.
 
 ## Software as a Service - Back-End Development
 
