@@ -364,6 +364,68 @@ title: "A Fictional Tale as a Fake Film",
 
 ![img.png](assets/images/step-4-003.png)
 
+### Step 5: CRUD - Queries
+
+**5.1 Retrieve all documents**
+```php
+db.films.countDocumnents(); 
+db.films.find();
+```
+![img.png](assets/images/step-5-002.png)
+
+
+**5.2 Retrieve all films written by ...**
+
+```php
+db.film.find(
+{
+    writers: ["James Cameron"]
+})
+```
+
+![img.png](assets/images/step-5-002.png)
+
+**5.3 Retrieve films with actor(s)**
+
+```php
+db.films.find({ actors: "Kate Winslet"}); 
+```
+![img.png](assets/images/step-5-003.png)
+
+**5.4 Retrieve films from a franchise ...**
+
+```php
+db.films.find({franchise: "The Hobbit"});
+db.films.find({franchise: "The Hobbit"}).count();
+```
+![img_1.png](assets/images/step-5-004.png)
+### Explanation
+
+This query retrieves all film documents where the `franchise` field is equal to `"The Hobbit"`. 
+
+**5.5 Retrieve films released in range ...**
+
+```php
+db.films.find({
+  year: {
+    $gte: 1980,
+    $lte: 2020
+  }
+})
+```
+![img.png](assets/images/step-5-005.png)
+
+**5.6 Retrieve films longer than ...**
+```php
+db.films.find({ running_time: { $gt: 120} })
+```
+![img.png](assets/images/step-5-006.png)
+
+**5.7 Retrieve films released in range ...**
+```php
+db.films.find({ year: { $gt: 2022} })
+```
+![img.png](assets/images/step-5-007.png)
 
 ## Software as a Service - Back-End Development
 
