@@ -181,64 +181,116 @@ Example: mongos mongodb://192.168.0.5:9999/foo
 > Provide the schema validation code for the collection. 
 
 ```php
+
 db.createCollection("films", {
   validator: {
     $jsonSchema: {
-    bsonType: "object",
-    required: ["title"],
-    properties: {
-      title: {
-        bsonType: "string"
-      },
-      year: {
-        bsonType: "int",
-        minimum: 1888,
-        maximum: 2100
-      },
-      writers: {
-        bsonType: "array",
-        items: {
-          bsonType: "string"
-        }
-      },
-      running_time: {
-        bsonType: "int",
-        minimum: 1
-      },
-      budget: {
-        bsonType: ["int", "long"],
-        minimum: 0
-      },
-      actors: {
-        bsonType: "array",
-        items: {
-          bsonType: "string"
-        }
-      },
-      directors: {
-        bsonType: "array",
-        items: {
-          bsonType: "string"
-        }
-      },
-      imdb_id: {
-        bsonType: ["string", "null"]
-      },
-      imdb_rating: {
-        bsonType: ["double", "null"],
-        minimum: 0,
-        maximum: 10
-      },
-      rotten_tomatoes: {
-        bsonType: ["int", "null"],
-        minimum: 0,
-        maximum: 100
+      bsonType: "object",
+      required: ["title"],
+      description: "Film collection documents",
+
+      properties: {
+        _id: {
+          bsonType: "objectId",
+          description: "Unique document identifier"
+        },
+
+        title: {
+          bsonType: "string",
+          description: "Movie title"
+        },
+
+        year: {
+          bsonType: "int",
+          description: "Year the film was released"
+        },
+
+        writers: {
+          bsonType: "array",
+          description: "List of writers",
+          items: {
+            bsonType: "string"
+          }
+        },
+
+        franchise: {
+          bsonType: "string",
+          description: "Film franchise name if applicable"
+        },
+
+        running_time: {
+          bsonType: "int",
+          description: "Running time in minutes"
+        },
+
+        budget: {
+          bsonType: ["int", "long", "null"],
+          description: "Production budget"
+        },
+
+        box_office: {
+          bsonType: ["int", "long", "null"],
+          description: "Box office revenue"
+        },
+
+        actors: {
+          bsonType: "array",
+          description: "List of actors",
+          items: {
+            bsonType: "string"
+          }
+        },
+
+        directors: {
+          bsonType: "array",
+          description: "List of directors",
+          items: {
+            bsonType: "string"
+          }
+        },
+
+        summary: {
+          bsonType: "string",
+          description: "Brief plot summary"
+        },
+
+        random: {
+          bsonType: ["double", "int"],
+          description: "Random value used for sampling"
+        },
+
+        genres: {
+          bsonType: "array",
+          description: "List of genres",
+          items: {
+            bsonType: "string"
+          }
+        },
+
+        imdb_id: {
+          bsonType: ["string", "null"],
+          description: "IMDb identifier"
+        },
+
+        imdb_rating: {
+          bsonType: ["double", "int", "null"],
+          description: "IMDb rating"
+        },
+
+        rotten_tomatoes: {
+          bsonType: ["int", "null"],
+          description: "Rotten Tomatoes score"
+        },
+
+        updated_at: {
+          bsonType: "date",
+          description: "Date the document was last updated"
         }
       }
     }
   }
 });
-``` 
+```
 
 **3.4 Collection Creation**
 
@@ -273,10 +325,46 @@ db.films.insertOne({
  })
 ```
 
-![img.png](assets/images/step-4-001.png)
+![img_1.png](assets/images/step-4-001.png)
 
 
 **4.2 Inserting Data from File**
+```text
+film-data-json.txt
+```
+
+```php
+$ mongoimport --uri "mongodb+srv://20070505_db_user:<MY_PASSWORD>@cluster0.wxkuth2.mongodb.net/saas_bed_portfolio_2026S1" --collection "
+films" --type json --file "film-data-json.txt" --jsonArray
+```
+
+![step-4-002.png](assets/images/step-4-002.png)
+
+**4.3 Inserting Data**
+
+```php
+db.films.insertMany([
+{
+title: "Pride",
+year: 2014,
+writers: ['Stephen Beesform'],
+franchise: "",
+running_time: 192,
+imdb_rating: 7.8
+},
+{
+title: "Pee Wee Herman's Big Adventure",
+},
+{
+title: "A Fictional Tale as a Fake Film",
+}
+])
+{
+```
+
+![img.png](assets/images/step-4-003.png)
+
+
 ## Software as a Service - Back-End Development
 
 #
