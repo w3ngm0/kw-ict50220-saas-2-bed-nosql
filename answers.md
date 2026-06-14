@@ -284,7 +284,7 @@ Example: mongos mongodb://192.168.0.5:9999/foo
 Add the Connection String used to connect to your MongoDB Atlas instance:
 
 > ```js
-> $ mongosh mongodb+srv://20070505_db_user:cZQlHQFSDaQFgkBu@cluster0.wxkuth2.mongodb.net/
+> $ mongosh mongodb+srv://20070505_db_user:<YOUR_PASSWORD>@cluster0.wxkuth2.mongodb.net/
 > ```
 
 ## 3.3 Database Creation
