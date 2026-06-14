@@ -427,6 +427,124 @@ db.films.find({ year: { $gt: 2022} })
 ```
 ![img.png](assets/images/step-5-007.png)
 
+## Step 6: CRUD - Updates
+**6.1 Update documents with a synopsis**
+```php
+db.films.updateOne(
+{
+title: "The Hobbit: The Desolation of Smaug" },
+{
+$set: {
+summary:  "The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical ring."
+},
+})
+```
+```php
+db.films.updateOne(
+{
+title: "The Hobbit: An Unexpected Journey" },
+{
+$set: {
+summary:  "A reluctant hobbit, Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim their mountain home - and the gold within it - from the dragon Smaug."
+},
+})
+```
+![img_1.png](assets/images/step-6-001.png)
+
+
+**6.2 Update document with an actor**
+
+```php
+db.films.updateOne(
+{ title: "Pulp Fiction" },
+{
+$push: {
+actors: {
+$each: ["Samuel L. Jackson"]}
+} })
+```
+![img.png](assets/images/step-6-002.png)
+![img.png](assets/images/step-6-022.png)
+
+> There is no film with the name titled "Pulp Fiction" found. 
+
+```php
+db.films.updateOne(
+  { title: "Star Trek VI: The Undiscovered Country" },
+  {
+    $push: {
+      actors: {
+        $each: [
+          "William Shatner",
+          "Leonard Nimoy",
+          "DeForest Kelley",
+          "James Doohan",
+          "Christopher Plummer",
+          "Walter Koenig",
+          "Nichelle Nichols",
+          "George Takei",
+          "Kim Cattrall",
+          "David Warner"
+        ]
+      }
+    }
+  }
+)
+```
+![img.png](assets/images/step-6-002-2.png)
+
+
+
+
+```php
+db.films.updateOne(
+  { title: "Star Trek: Nemesis" },
+  {
+    $push: {
+      actors: {
+        $each: [
+          "Patrick Stewart",
+          "Jonathan Frakes",
+          "Brent Spiner",
+          "LeVar Burton",
+          "Michael Dorn",
+          "Gates McFadden",
+          "Marina Sirtis"
+        ]
+      }
+    }
+  }
+)
+```
+![img.png](assets/images/step-6-002-4.png)
+
+```php
+db.films.insertOne(
+{ title: "Star Trek VI: The Undiscovered Country" }
+)
+ 
+
+db.films.updateOne(
+  { title: "Star Trek VI: The Undiscovered Country" },
+  {
+    $push: {
+      actors: {
+        $each: [
+          "Patrick Stewart",
+          "Jonathan Frakes",
+          "Brent Spiner",
+          "LeVar Burton",
+          "Michael Dorn",
+          "Gates McFadden",
+          "Marina Sirtis"
+        ]
+      }
+    }
+  }
+)
+```
+![img.png](assets/images/step-6-002-3.png)
+
 ## Software as a Service - Back-End Development
 
 #
