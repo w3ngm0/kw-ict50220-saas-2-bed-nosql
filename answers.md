@@ -656,10 +656,104 @@ title: {
 ```
 ![img.png](assets/images/step-8-003.png)
 
+## Step 9: NoSQL Indexes
+
+**9.1 Indexes for Sorting**
+
+```php
+ db.films.createIndex({
+ title: 1,
+ })
+
+ db.films.createIndex({
+ year: 1,
+ title: 1
+ })
+
+db.films.createIndex({
+ year: 1,
+ title: 1,
+ actors: 1,
+ franchise: 1 })
+
+```
+
+### Index 1
+Creates an ascending index on the `title` field to improve query performance when searching or sorting by title.
+
+### Index 2
+Creates a compound index on the `year` and `title` fields.
+Queries that filter or sort by year and title can use this index.
+
+### Index 3
+Creates a compound index on the `year`, `title`, `actors`, and `franchise` fields in that order.
+
+![img.png](assets/images/step-9-001.png)
+
 ### Explanation 
 
 * This query deletes all films whose title contains the exact word "Fictional".
 * The `$options: "i"` option makes the search case-insensitive, meaning it will match "Fictional", "fictional", "FICTIONAL", and other variations of capitalization.
+
+**9.2 Indexes for Full Text Search**
+
+```php
+db.films.createIndex({
+ title: "text",
+ summary: "text"
+})
+```
+![img.png](assets/images/step-9-002.png)
+
+### Explanation
+
+This command creates a text index on the `title` and `summary` fields.
+A text index allows MongoDB to perform full-text searches, making it possible to search for words and phrases within film titles and summaries using the `$text` operator.
+
+**9.3 Verifying Execution Plans** 
+* Check the execution plan for a query that finds the films with a title containing "Star".
+* Check if the created index is being used. 
+
+```php
+db.films.find({
+title: /Star/
+}).explain("executionStats")
+```
+
+![img_1.png](assets/images/step-9-003.png)
+
+> stage: 'IXSCAN', 
+> indexName: 'title_1'
+
+> This query checks the execution plan for films with titles starting with "Star". 
+> In the explain output, `IXSCAN` means the title index is being used. 
+
+
+**9.4 Differences in Indexes**
+
+### Differences Between Sorting Indexes and Full-Text search indexes
+- A standard index(such as an ascending index on `title`) is designed to improve the performance of queries that filer,
+sort, or retrieve data based on specific field values. 
+- A full-text search index is designed for searching words and phrases within text fields. Instead of matching exact 
+values, MongoDB breaks text into searchable terms and allows users for keywords contained within documents.
+
+### When to use each: 
+
+**Sorting Index**
+> - Best used when filtering or sorting data by specific fields: 
+> - For example; 
+>   - Finding films released in a particular year.
+>   - Sorting films alphabetically by title.
+>   - Looking up a film by its exact title.
+
+**Full-Text search Index**
+> - Best used when searching for words or phrases withing large text fields. 
+> - For example;
+>   - Finding films whose summary contains the word "Captain".
+>   - Searching for films related to "outdoor adventure"
+>   - Looking for keywords within titles and summaries.
+
+
 
 ## Software as a Service - Back-End Development
 
